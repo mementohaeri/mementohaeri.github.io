@@ -19,7 +19,7 @@ locale                   : "en-US"
 title                    : "MementoHaeri Blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Your Name"
+name                     : "HaeRim"
 description              : "MementoHaeri Library"
 url                      : "https://mementohaeri.github.io"
 baseurl                  : ""
