@@ -1,13 +1,10 @@
-```yaml
 ---
-title:  "github.io 블로그 시작하기"
-excerpt: "첫 글입니다."
-
-categories:
-  - Blog
-tags:
-  - Blog
+title: "github.io 첫 글"
+categories :	
+ - Blog
+tags : 
+ - Blog
 ---
-```
 
-첫 글 등록합니다.
+블로그 첫 글인데, 제대로 올라가라~~!~!
+
