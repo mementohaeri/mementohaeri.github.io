@@ -1,0 +1,3 @@
+User-agent : *
+Allow : /
+Sietmap: https://mementohaeri.github.io/sitemap.xml
