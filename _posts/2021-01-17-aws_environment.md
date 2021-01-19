@@ -290,3 +290,5 @@ Free Tier로 이용할 계획이므로 기본 플랜 (무료)을 선택한다. �
 # service sshd restart	// sshd 데몬 재시작
 ```
 
+
+
