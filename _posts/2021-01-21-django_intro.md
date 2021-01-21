@@ -27,6 +27,8 @@ Django (장고)는 웹 어플리케이션 개발에 사용하는 파이썬 기�
 
 ![mtv](https://user-images.githubusercontent.com/77096463/105367713-141e6580-5c44-11eb-8c04-f1dd6294381b.png)
 
+<br/>
+
 - ORM (Object Relational Mapping) : 데이터베이스와 객체 지향 프로그래밍 언어 간의 호환되지 않는 데이터를 변환하는 프로그래밍 기법이다. 즉, 데이터베이스는 'table'을, 객체 지향 프로그래밍 언어는 'class'를 사용하여  호환되지 않는 데이터가 발생하고 ORM은 이러한 객체와 관계형 DB 간의 데이터를 자동으로 매핑한다.
 
 <br/>
@@ -54,6 +56,7 @@ models.py에서 데이터베이스 변경사항이 발생하는 경우, 실제 D
 
 templates/디렉토리 하위에 페이지 별로 앱 템플릿 파일 (.html)을 저장하며, HTML 양식을 따른다.
 정보를 일정한 형태로 표시하기 위한 재사용 가능한 파일이다.
+
 <br/> 
 
 ## URLconf (urls.py)
@@ -63,6 +66,7 @@ templates/디렉토리 하위에 페이지 별로 앱 템플릿 파일 (.html)�
 페이지 요청 시 가장 먼저 호출되며 URL-View(함수 or 메서드)를 매핑한다.
 프로젝트 URL과 앱 URL로 분리하여 각각 구성하는 방법이 권장된다.
 django 서버로 http 요청이 들어오면, URLConf의 매핑 리스트를 순차적으로 찾아 검색한다.
+
 <br/>
 
 ## settings.py
@@ -83,5 +87,6 @@ django에서는 default 데이터베이스로 Sqlite3를 사용한다.
 
 django에서는 테스트용 runserver가 제공된다.
 상용화를 위해서는 Apache, Nginx 등의 상용 서버로 변경해야 한다. 
+
 <br/>
 
