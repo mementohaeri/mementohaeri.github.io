@@ -54,10 +54,14 @@ IAM Role을 생성한다.
 <br/>
 <br/>
 
-kubectl을 설치한다.
+Bastion에 kubectl을 설치한다.
+> kubectl : 쿠버네티스 커맨드 라인 도구
+> 이를 이용하여 쿠버네티스 클러스터에 대한 명령을 실행할 수 있다.
+> 애플리케이션을 배포하고, 클러스터 리소스를 검사 및 관리하여 로그를 볼 수 있다.
+
 ```
 $ curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.18.0/bin/linux/amd64/kubectl	// kubectl 설치파일 다운로드
-$ chmod +x ./kubectl	// 권한 변경
+$ chmod +x ./kubectl	// 실행권한 추가
 $ sudo mv ./kubectl /usr/local/bin/kubectl		// 디렉토리 변경
 $ kubectl version --client		// 설치 확인
 ```
