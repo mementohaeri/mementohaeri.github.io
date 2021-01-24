@@ -1,5 +1,5 @@
 ---
-title: "쿠버네티스 환경 기반의 EKS 클러스터 구축,, Nginx 서비스 배포 "
+title: "쿠버네티스 환경 기반의 EKS 클러스터 구축, Nginx 서비스 배포 "
 categories :	
  - AWS
 tags : 
