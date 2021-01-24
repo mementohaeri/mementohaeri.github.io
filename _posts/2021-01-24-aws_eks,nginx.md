@@ -127,7 +127,7 @@ $ eksctl create cluster --name mission-cluster --version 1.17 --region ap-northe
 ```
 $ kubectl get node 
 ```
-![image](https://user-images.githubusercontent.com/77096463/105620805-d12ae080-5e43-11eb-9a31-f577b10e7e68.png)
+![image](https://user-images.githubusercontent.com/77096463/105622079-8ca64180-5e51-11eb-9913-e96e92642c31.png)
 <br/>
 <br/>
 <br/>
