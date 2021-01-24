@@ -34,7 +34,9 @@ tags :
 ## 1. 프로젝트 생성
 
 django 프로젝트를 위한 가상환경을 생성한다. 
-	- Anconda Prompt 에서 진행
+
+- Anconda Prompt 에서 진행
+
 ```
 $ conda create --name [가상환경명]
 $ conda activate [가상환경명]
@@ -52,7 +54,7 @@ $ conda install django
 
 django 프로젝트를 생성한다.
 
-​	- django 프로젝트 폴더 하위에 manage.py 파일이 생성되었는지 확인한다.
+- django 프로젝트 폴더 하위에 manage.py 파일이 생성되었는지 확인한다.
 
 ```
 $ django-admin startproject [프로젝트명]
@@ -145,16 +147,6 @@ INSTALLED_APPS = [
 
 모델을 정의한 다음, models.py 파일에 코드를 추가한다.
 
-| field       | type           | condition          | description       |
-| ----------- | -------------- | ------------------ | ----------------- |
-| id          | int            | PK, auto increment | 기본키            |
-| title       | CharField(50)  | -                  | 포스트 제목       |
-| slug        | SlugField(50)  | Unique             | 포스트 제목 별칭  |
-| description | CharField(100) | Blank              | 포스트 내용 한 줄 |
-| content     | TextField      | -                  | 포스트 내용       |
-| create_date | DateTimeField  | auto_now_add       | 포스트 작성 날짜  |
-| modify_date | DateTimeField  | auto_now           | 포스트 수정 날짜  |
-
 <br/>
 
 ```python
@@ -200,7 +192,7 @@ class Post(models.Model):
 <br/>
 
 admin 사이트에 모델을 등록한다.
-​	- `python manage.py runserver` 명령어 실행 후, http://127.0.0.1:8000/admin/ 홈페이지를 통해 확인 가능
+ - `python manage.py runserver` 명령어 실행 후, http://127.0.0.1:8000/admin/ 홈페이지를 통해 확인 가능
 
 ```python
 from django.contrib import admin
@@ -236,17 +228,18 @@ $ python manage.py migrate
 
 ## 3. URLConf 코딩
 
-| URL 패턴 (urls.py) | View 이름 (views.py)      | Template 파일명 (template/*.html) |
-| ------------------ | ------------------------- | --------------------------------- |
-| /blog/             | PostLV(ListView)          | post_all.html                     |
-| /blog/post         | PostLV(ListView)          | post_all.html                     |
-| /blog/post/python  | PostDV(DetailView)        | post_detail.html                  |
-| /blog/archive      | PostAV(ArchiveIndexView)  | post_archive.html                 |
-| /blog/2021         | PostYAV(YearArchiveView)  | post_archive_year.html            |
-| /blog/2021/jan     | PostMAV(MonthArchiveView) | post_archive_month.html           |
-| /blog/2021/jan/24  | PostDAV(DayArchiveView)   | post_archive_day.html             |
-| /blog/today/       | PostTAV(TodayArchiveView) | post_archive_day.html             |
-| /admin             | Django                    | -                                 |
+| field       | type           | condition          | description       |
+| :---------- | -------------- | ------------------ | ----------------- |
+| id          | int            | PK, auto increment | 기본키            |
+| title       | CharField(50)  | -                  | 포스트 제목       |
+| slug        | SlugField(50)  | Unique             | 포스트 제목 별칭  |
+| description | CharField(100) | Blank              | 포스트 내용 한 줄 |
+| content     | TextField      | -                  | 포스트 내용       |
+| create_date | DateTimeField  | auto_now_add       | 포스트 작성 날짜  |
+| modify_date | DateTimeField  | auto_now           | 포스트 수정 날짜  |
+
+
+
 <br/>
 <br/>
 
