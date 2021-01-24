@@ -34,7 +34,7 @@ tags :
 ## 1. 프로젝트 생성
 
 django 프로젝트를 위한 가상환경을 생성한다. 
-- Anconda Prompt 에서 진행
+	- Anconda Prompt 에서 진행
 ```
 $ conda create --name [가상환경명]
 $ conda activate [가상환경명]
@@ -50,9 +50,10 @@ $ conda install django
 <br/>
 <br/>
 
-
 django 프로젝트를 생성한다.
-- django 프로젝트 폴더 하위에 manage.py 파일이 생성되었는지 확인한다.
+
+​	- django 프로젝트 폴더 하위에 manage.py 파일이 생성되었는지 확인한다.
+
 ```
 $ django-admin startproject [프로젝트명]
 $ cd [프로젝트 디렉토리]
@@ -65,6 +66,7 @@ $ code .			# 현 디렉토리에서 vscode를 실행한다.
 settings.py (설정파일)을 변경한다.
 - TEMPLATES, DATABASES경로를 프로젝트 경로에 맞춰 변경한다.
 - LANGUAGE_CODE, TIME_ZONE를 각각 한국어, 서울 시간에 맞춰준다.
+
 ```
 TEMPLATES = [
     {
@@ -103,6 +105,7 @@ TIME_ZONE = 'Asia/Seoul'
 
 프로젝트 관리자인 superuser를 생성한다.
 - id, password, email 을 설정한다.
+
 ```
 $ python manage.py createsuperuser 
 ```
@@ -111,6 +114,7 @@ $ python manage.py createsuperuser
 
 
 startapp 명령어를 통해 프로젝트 내에 만들고자 하는 앱을 생성한다.
+
 ```
 $ python manage.py startapp [앱이름]
 ```
@@ -119,6 +123,7 @@ $ python manage.py startapp [앱이름]
 
 
 방금 만든 앱을 settings.py 파일에 등록하여 프로젝트 에서 앱을 사용할 수 있게 수정한다.
+
 ```
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -139,6 +144,7 @@ INSTALLED_APPS = [
 ## 2. 모델 생성
 
 모델을 정의한 다음, models.py 파일에 코드를 추가한다.
+
 | field       | type           | condition          | description       |
 | ----------- | -------------- | ------------------ | ----------------- |
 | id          | int            | PK, auto increment | 기본키            |
@@ -148,6 +154,8 @@ INSTALLED_APPS = [
 | content     | TextField      | -                  | 포스트 내용       |
 | create_date | DateTimeField  | auto_now_add       | 포스트 작성 날짜  |
 | modify_date | DateTimeField  | auto_now           | 포스트 수정 날짜  |
+
+<br/>
 
 ```python
 from django.db import models
@@ -227,6 +235,7 @@ $ python manage.py migrate
 
 
 ## 3. URLConf 코딩
+
 | URL 패턴 (urls.py) | View 이름 (views.py)      | Template 파일명 (template/*.html) |
 | ------------------ | ------------------------- | --------------------------------- |
 | /blog/             | PostLV(ListView)          | post_all.html                     |
@@ -283,9 +292,13 @@ urlpatterns = [
    -  이러한 뷰는 generic을 사용하고 외부 모듈 적용이 필요한데, `as_view()`를 통해 generic view를 사용할 수 있다.
 2.  path의 `name`  : path()의 네번째 파라미터로, path의 이름을 지정한다. path 명으로부터 URL 패턴 정보를 찾는 url reversing을 위한 것
 
+<br/>
+<br/>
 
 
-출처 : https://tutorial.djangogirls.org/ko/django_models/
-https://has3ong.tistory.com/236
+
+출처 : https://tutorial.djangogirls.org/ko/django_models/ <br/>
+https://has3ong.tistory.com/236 <br/>
 https://m.blog.naver.com/PostView.nhn?blogId=pjok1122&logNo=221594402973&proxyReferer=https:%2F%2Fwww.google.com%2F
+<br/>
 
