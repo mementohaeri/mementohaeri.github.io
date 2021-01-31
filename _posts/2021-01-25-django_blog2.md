@@ -65,8 +65,6 @@ class PostTAV(TodayArchiveView):
 <br/>
 <br/>
 <br/>
-
-
 ## 5. Template 생성
 
 모든 템플릿 페이지가 상속할 base.html을 생성한다. 

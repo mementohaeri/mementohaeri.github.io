@@ -31,7 +31,7 @@ $ eksctl create cluster --name mission-cluster --version 1.17 --region ap-northe
 ```
 $ kubectl get node 
 ```
-![image-20210131232335287](2021-01-31-aws_eft_stack.assets/image-20210131232335287.png)
+![image-20210131232335287](2021-01-31-aws_eft_stack.assets/image-20210131232335287-1612111726113.png)
 
 <br/>
 
