@@ -75,11 +75,11 @@ class PostTAV(TodayArchiveView):
 <html lang="ko">
 
 <head>
-<title>{% block title %}Django Web Programming{% endblock %}</title>
+<title>{% raw %}{% block title %}{% endraw %}Django Web Programming{% raw %}{% endblock %} {% endraw %} </title>
 
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static 'css/base.css' %}{% endblock %}" />
-<link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}" />
+{% raw %}{% load static %}{% endraw %}
+<link rel="stylesheet" type="text/css" href="{% raw %}{% block stylesheet %}{% static 'css/base.css' %}{% endblock %}{% endraw %}" />
+<link rel="stylesheet" type="text/css" href="{% raw %}{% block extrastyle %}{% endblock %}{% endraw %}" />
 
 </head>
 
@@ -94,9 +94,9 @@ class PostTAV(TodayArchiveView):
     </div>
 
     <div id="menu">
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'bookmark:index' %}">Bookmark</a></li>
-        <li><a href="{% url 'blog:index' %}">Blog</a></li>
+        <li><a href="{% raw %}{% url 'home' %}{% endraw %}">Home</a></li>
+        <li><a href="{% raw %}{% url 'bookmark:index' %}{% endraw %}">Bookmark</a></li>
+        <li><a href="{% raw %}{% url 'blog:index' %}{% endraw %}">Blog</a></li>
         <li><a href="#">Photo</a></li>
 
         <li><a href="#">Add&bigtriangledown;</a>
@@ -114,13 +114,13 @@ class PostTAV(TodayArchiveView):
             </ul>
         </li>
 
-        <li><a href="{% url 'blog:post_archive' %}">Archive</a></li>
-        <li><a href="{% url 'blog:search' %}">Search</a></li>
-        <li><a href="{% url 'admin:index' %}">Admin</a></li>
+        <li><a href="{% raw %}{% url 'blog:post_archive' %}{% endraw %}">Archive</a></li>
+        <li><a href="{% raw %}{% url 'blog:search' %}{% endraw %}">Search</a></li>
+        <li><a href="{% raw %}{% url 'admin:index' %}{% endraw %}">Admin</a></li>
     </div>
 
-    {% block content %}{% endblock %}
-    {% block footer %}{% endblock %}
+    {% raw %}{% block content %}{% endblock %}{% endraw %}
+    {% raw %}{% block footer %}{% endblock %}{% endraw %}
 
 </body>
 </html>
@@ -135,35 +135,35 @@ class PostTAV(TodayArchiveView):
 templates/blog/post_all.html 경로에 코드를 작성한다.
 
 ```python
-{% extends "base.html" %}
+{% raw %}{% extends "base.html" %}{% endraw %}
 
-{% block title%} Post title {% endblock%}
+{% raw %}{% block title%}{% endraw %} Post title {% raw %}{% endblock%}{% endraw %}
 
-{% block content %}
+{% raw %}{% block content %}{% endraw %}
 <div id="content">
    <h1>Blog List</h1>
    <!-- display blog list -->
-   {% for post in posts %}
+   {% raw %}{% for post in posts %}{% endraw %}
       <h2><a href='{{post.get_absolute_url}}'>{{post.title}}</a></h2>
       {{post.modify_date | date:"Y-m-d H:i A"}}
       <p>{{post.description}}</p>
-   {% endfor%}
+   {% raw %}{% endfor%}{% endraw %}
    <br/>
 
    <!-- paging link -->
    <div>
-         {% if page_obj.has_previous %}
+         {% raw %}{% if page_obj.has_previous %}{% endraw %}
             <a href="?page={{page_obj.previous_page_number}}"> Prev </a>
-         {% endif %}
+         {% raw %}{% endif %}{% endraw %}
 
          [ Page {{page_obj.number}} /  {{page_obj.paginator.num_pages}} ]
          
-         {% if page_obj.has_next %}
+         {% raw %}{% if page_obj.has_next %}{% endraw %}
             <a href="?page={{page_obj.next_page_number}}"> Next </a>
-         {% endif %}
+         {% raw %}{% endif %}{% endraw %}
    </div>
 </div>
-{% endblock %}
+{% raw %}{% endblock %}{% endraw %}
 ```
 
 <br/>
