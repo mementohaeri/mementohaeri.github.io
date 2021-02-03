@@ -31,7 +31,8 @@ $ eksctl create cluster --name mission-cluster --version 1.17 --region ap-northe
 ```
 $ kubectl get node 
 ```
-![image-20210131232335287](2021-01-31-aws_eft_stack.assets/image-20210131232335287-1612111726113.png)
+
+![image-20210131230724134](https://user-images.githubusercontent.com/77096463/106752840-3ebde480-666e-11eb-9d79-bd95cae6ec95.png)
 
 <br/>
 
@@ -41,7 +42,8 @@ Nginx 서비스를 배포하기 위해 우선 Nginx-Deployment.yaml 파일을 �
 $ kubectl apply -f nginx-deployment.yaml
 $ kubectl get pod				
 ```
-![image-20210131230903147](2021-01-31-aws_eft_stack.assets/image-20210131230903147.png)
+
+![image-20210131230903147](https://user-images.githubusercontent.com/77096463/106752880-48dfe300-666e-11eb-8f6a-62fe13a9b91f.png)
 
 <br/>
 
@@ -51,12 +53,14 @@ $ kubectl get pod
 $ kubectl apply -f nginx-service.yaml		
 $ kubectl get service	 	
 ```
-![image-20210131233835030](2021-01-31-aws_eft_stack.assets/image-20210131233835030.png)
+
+![image-20210131233835030](https://user-images.githubusercontent.com/77096463/106753105-90666f00-666e-11eb-9411-711900d46a28.png)
 
 <br/>
 
 로드 밸런서의 DNS를 통해 Nginx 서버 접속이 가능한지 확인한다.
-![image-20210131233946149](2021-01-31-aws_eft_stack.assets/image-20210131233946149.png)
+
+![image-20210131233946149](https://user-images.githubusercontent.com/77096463/106753128-99574080-666e-11eb-8a31-c17f0e28e878.png)
 <br/>
 <br/>
 <br/>
@@ -131,7 +135,7 @@ $ kubectl get pod | grep elastic	# pod 확인
 $ kubectl get svc | grep elastic	# service 확인
 ```
 
-![image-20210201004701321](2021-01-31-aws_eft_stack.assets/image-20210201004701321.png)
+![image-20210201004701321](https://user-images.githubusercontent.com/77096463/106753158-a5430280-666e-11eb-9a37-795402bec2ea.png)
 <br/> <br/>
 
 
@@ -140,11 +144,13 @@ $ kubectl get svc | grep elastic	# service 확인
 > 리스너에 정의한 규칙에 따라 로드밸런서가 등록된 대상으로 요청을 라우팅하는 방법을 결정한다.
 
 LoadBalancer에 리스너를 추가하기 위해 elasticSearch.yaml파일에서 정의한 9200 포트를 로드밸런서의 리스너 탭에 추가한다. 
-![image-20210201005612258](2021-01-31-aws_eft_stack.assets/image-20210201005612258.png)
+
+![image-20210201005612258](https://user-images.githubusercontent.com/77096463/106753180-aecc6a80-666e-11eb-99cf-54e43bdb6e79.png)
 <br/>
 
 또한, 로드밸런서의 9200번 포트로 외부 접근 허용을 위해 로드밸런서의 보안 그룹 인바운드 규칙을 편집해야 한다.
-![image-20210201005412491](2021-01-31-aws_eft_stack.assets/image-20210201005412491.png)
+
+![image-20210201005412491](https://user-images.githubusercontent.com/77096463/106753225-bee44a00-666e-11eb-9d40-ef4e544b0986.png)
 <br/>
 
 모든 과정이 완료된다면 **로드밸런서DNS:9200** 접속을 통해 ElasticSearch를 NodePort type의 서비스로 배포하여 Nginx의 로드밸런서에 연결되어 통신이 이루어짐을 확인할 수 있다.
@@ -263,21 +269,24 @@ EOF
 <br/>
 
 fluentd.yaml 파일로 fluentd Daemonset pod를 배포한 후 서비스가 배포되었는지 확인한다.
-![image-20210201012457525](2021-01-31-aws_eft_stack.assets/image-20210201012457525.png)
+
+![image-20210201012457525](https://user-images.githubusercontent.com/77096463/106753270-cd326600-666e-11eb-939c-1376c2098718.png)
 <br/>
 
 아래의 kibana 구축 단계를 거쳤다면 kibana에서 로그를 수집할 인덱스 패턴을 생성할 수 있다. 
 (먼저 kibana 구축 끝내고 이번 단계 진행)
 
 - 인덱스 패턴 생성 : kibana -> [management] -> [index patterns] -> Index Pattern: logstash* -> next step -> @timestamp -> create index pattern
-![image-20210201013017631](2021-01-31-aws_eft_stack.assets/image-20210201013017631.png)
 
-![image-20210201013034114](2021-01-31-aws_eft_stack.assets/image-20210201013034114.png)
+![image-20210201013017631](https://user-images.githubusercontent.com/77096463/106753329-e3d8bd00-666e-11eb-9536-aa5eb87fed1b.png)
+
+![image-20210201013034114](https://user-images.githubusercontent.com/77096463/106753356-eaffcb00-666e-11eb-8cdf-6effd3fabd46.png)
 <br/>
 
 로그 시각화 마지막 단계이다. 검색 필터를 설정하여 nginx의 로그를 확인할 예정이다.
 kibana -> [discover] -> 검색필터 설정 -> kubernetes.labels.run is [nginx 배포 시 사용한 label]
-![image-20210201013236572](2021-01-31-aws_eft_stack.assets/image-20210201013236572.png)
+
+![image-20210201013236572](https://user-images.githubusercontent.com/77096463/106753392-f3580600-666e-11eb-99f4-250c347d10b4.png)
 <br/>
 <br/> 
 <br/>
@@ -345,20 +354,22 @@ $ kubectl get pod	# pod 확인
 $ kubectl get service	# 서비스 확인
 ```
 
-![image-20210201011006671](2021-01-31-aws_eft_stack.assets/image-20210201011006671.png)
+![image-20210201010727073](https://user-images.githubusercontent.com/77096463/106753460-0965c680-666f-11eb-91b4-697da2363887.png)
 <br/>
 
 LoadBalancer에 리스너를 추가하기 위해 kibana.yaml파일에서 정의한 5601포트를 로드밸런서의 리스너 탭에 추가한다. 
-![image-20210201011325301](2021-01-31-aws_eft_stack.assets/image-20210201011325301.png)
+
+![image-20210201011325301](https://user-images.githubusercontent.com/77096463/106753502-184c7900-666f-11eb-98c0-62636aea78b6.png)
 <br/>
 
 또한, 로드밸런서의 5601번 포트로 외부 접근 허용을 위해 로드밸런서의 보안 그룹 인바운드 규칙을 편집해야 한다.
-![image-20210201011429082](2021-01-31-aws_eft_stack.assets/image-20210201011429082.png)
+
+![image-20210201011429082](https://user-images.githubusercontent.com/77096463/106753536-213d4a80-666f-11eb-8b6a-5265ba90451f.png)
 <br/>
 
 모든 과정이 완료된다면 **로드밸런서DNS:5601** 접속을 통해 kibana를 NodePort type의 서비스로 배포하여 Nginx의 로드밸런서에 연결되어 통신이 이루어짐을 확인할 수 있다.
 
-![image-20210201011800197](2021-01-31-aws_eft_stack.assets/image-20210201011800197.png)
+![image-20210201011800197](https://user-images.githubusercontent.com/77096463/106753558-27cbc200-666f-11eb-855b-90e5cf09b80d.png)
 
 <br/>
 
@@ -378,7 +389,7 @@ $ kubectl delete -f nginx-service.yaml
 $ kubectl delete -f nginx-deployment.yaml
 ```
 
-![image-20210201013708055](2021-01-31-aws_eft_stack.assets/image-20210201013708055.png)
+![image-20210201013708055](https://user-images.githubusercontent.com/77096463/106753597-374b0b00-666f-11eb-8ef6-456a29d80ee4.png)
 <br/>
 
 2. EKS 클러스터와 Node Group을 삭제한다.
@@ -389,5 +400,5 @@ $ kubectl delete -f nginx-deployment.yaml
 $ eksctl delete cluster --region ap-northeast-2 --name=mission-cluster
 ```
 
-![image-20210201013800623](2021-01-31-aws_eft_stack.assets/image-20210201013800623.png)
+![image-20210201013800623](https://user-images.githubusercontent.com/77096463/106753616-3d40ec00-666f-11eb-999f-a26407c6c3f0.png)
 
