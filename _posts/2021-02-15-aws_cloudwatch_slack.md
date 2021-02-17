@@ -44,13 +44,13 @@ tags :
 1. 워크 스페이스 -> 설정 및 관리 -> 앱 관리 -> 앱으로 이동
 2. Web hook 검색하여 수신 웹후크를 Slack에 추가하기
 
-![image](https://user-images.githubusercontent.com/77096463/107951738-2047d980-6fdc-11eb-81c4-af3f81de4553.png)
+![image](https://user-images.githubusercontent.com/77096463/108217291-c3345b00-7176-11eb-9e6d-9f2fa8de0b4d.png)
 
 3. project 채널을 선택한 뒤 수신 웹후크 통합 앱 추가
 4. 설정 저장 -> 웹후크 URL 복사 (추후 키 암호화에 사용할 예정)
 5. cURL 요청 복사 ->EC2 인스턴스에 붙여넣은 뒤 Slack 메시지 수신된 결과 확인하기
 
-![image](https://user-images.githubusercontent.com/77096463/107952006-86ccf780-6fdc-11eb-819c-ccde2eebec5f.png)
+![image](https://user-images.githubusercontent.com/77096463/108217400-e2cb8380-7176-11eb-89d4-35c5b0ee06c7.png)
 
 ![image](https://user-images.githubusercontent.com/77096463/107952055-96e4d700-6fdc-11eb-861f-bbb04be8b1f7.png)
 
@@ -77,7 +77,6 @@ tags :
 
 ![image](https://user-images.githubusercontent.com/77096463/107952743-7ff2b480-6fdd-11eb-9ecc-85a588ca63e9.png)
 <br/>
-
 3. 기본 정보 
 
 - 함수 이름 : mission-lambda
@@ -85,12 +84,10 @@ tags :
 
 ![image](https://user-images.githubusercontent.com/77096463/107953184-1cb55200-6fde-11eb-9a33-5eb087c1f604.png)
 <br/>
-
 4. SNS 트리거 -> 아까 SNS 에서 생성한 주제의 ARN을 입력한다.
 
 ![image](https://user-images.githubusercontent.com/77096463/107953209-2939aa80-6fde-11eb-8502-ff91dd99a320.png)
 <br/>
-
 5. 환경 변수 설정
 
 - slackChannel: 값으로 slack 워크스페이스의 채널명인 project 입력
@@ -133,13 +130,13 @@ $ aws kms create-alias --alias-name alias/mission-kms-key --target-key-id [key_i
 
 ```
 $ aws --version
-$ aws kms encrypt --key-id alias/mission-kms-key --plaintext "hooks.slack.com/services/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" --region ap-northeast-2 --encryption-context LambdaFunctionName=mission-lambda
+$ aws kms encrypt --key-id alias/mission-kms-key --plaintext "[web_hook_url]" --region ap-northeast-2 --encryption-context LambdaFunctionName=mission-lambda
 ```
 
 ![image](https://user-images.githubusercontent.com/77096463/107955631-59367d00-6fe1-11eb-9ac0-907709aba14e.png)
 <br/>
 
-![image](https://user-images.githubusercontent.com/77096463/107955763-83883a80-6fe1-11eb-84d1-e6ec48ca79f7.png)
+![image](https://user-images.githubusercontent.com/77096463/108217688-39d15880-7177-11eb-8bac-d5d46cf7c854.png)
 <br/>
 <br/>
 <br/>
@@ -211,7 +208,6 @@ $ aws kms encrypt --key-id alias/mission-kms-key --plaintext "hooks.slack.com/se
 
 ![image](https://user-images.githubusercontent.com/77096463/107963984-2e055b00-6fec-11eb-9dd6-828e8ea1b91c.png)
 <br/>
-
 2. 테스트 버튼 클릭 -> Slack 테스트 메신저 수신 확인
 
 ![image](https://user-images.githubusercontent.com/77096463/107964071-483f3900-6fec-11eb-9af1-d3927953b40b.png)
@@ -235,7 +231,6 @@ $ aws kms encrypt --key-id alias/mission-kms-key --plaintext "hooks.slack.com/se
 
 ![image](https://user-images.githubusercontent.com/77096463/107964878-22666400-6fed-11eb-99cc-4dfeaef4b591.png)
 <br/>
-
 4. 작업 구성
 
 - [알림] 경보 상태 트리거: 경보 상태 / SNS 주제 선택 : 기존 SNS 주제 선택 (mission-sns)
@@ -243,7 +238,6 @@ $ aws kms encrypt --key-id alias/mission-kms-key --plaintext "hooks.slack.com/se
 
 ![image](https://user-images.githubusercontent.com/77096463/108070558-01af1480-70a8-11eb-9b37-352d9456eb42.png)
 <br/>
-
 5. 이름 및 설명 추가 -> mission-cpu-alarm
 
 ![image](https://user-images.githubusercontent.com/77096463/107965271-ac163180-6fed-11eb-8677-134c35d847d5.png)
