@@ -257,5 +257,63 @@ $ stress --cpu 1 --timeout 300	//5분동안 cpu 99.99% 사용
 
 <br/>
 
-### 
+### Slack 메신저 수신 확인
 
+1. 알람 발생 확인 : CloudWatch -> 경보 -> mission-cpu-alarm
+2. Slack 메신저 메시지 수신 확인
+
+![경보상태](https://user-images.githubusercontent.com/77096463/108224285-178f0900-717e-11eb-9890-3be2075f0327.PNG)
+
+![slack_alarm](https://user-images.githubusercontent.com/77096463/108224394-37263180-717e-11eb-826c-50c004f7eac0.PNG)
+
+<br/>
+
+<br/>
+
+# 9. Slack 알람 문구 수정
+
+### 메시지 포맷 개선
+
+1. 알람 가독성 향상을 위한 메시지 포맷 개선
+
+[기존]
+
+![image](https://user-images.githubusercontent.com/77096463/108224577-676dd000-717e-11eb-86ae-697eea7e92b1.png)
+
+<br/>
+
+### Lambda 함수 코드 수정
+
+1. CloudWatch 알람 발생 -> SNS를 통해 기록데이터의 "publishedMessage" 내용이 Lambda 함수로 전송됨
+2. 따라서 메시지 내용을 Lambda 함수에서 가공해 Slack 메신저의 가독성 향상
+
+- publishedMessage 내용이 slack 메신저에 출력됨을 확인
+
+![image](https://user-images.githubusercontent.com/77096463/108225523-5d989c80-717f-11eb-8af2-d4faa6b080f4.png)
+
+3. 테스트 이벤트 내용의 Message 내용을 파이썬 코드에서 parsing 및 편집
+
+![image](https://user-images.githubusercontent.com/77096463/108226603-63db4880-7180-11eb-9d1b-49c421b63b2b.png)
+
+4. 환경 변수 추가
+
+- Project : Mission-Comento (서비스)
+- Environment: dev (개발망)
+
+![image](https://user-images.githubusercontent.com/77096463/108227100-e19f5400-7180-11eb-8047-12224475c8bf.png)
+
+<br/>
+
+모든 작업이 완료된 후, lambda 함수 테스트하면 slack 메신저는 다음과 같은 메시지를 출력한다.
+
+![image](https://user-images.githubusercontent.com/77096463/108227331-22976880-7181-11eb-819c-8e17eaca4155.png)
+
+<br/>
+
+### 메시지 포맷 개선 후 CPU 부하 테스트
+
+1. CPU 부하 테스트 stress 실행 -> 5분 동안 cpu 점유율 99.9% 
+2. CloudWatch 알람 발생 확인
+3. Slack 메신저 수신 확인
+
+![image](https://user-images.githubusercontent.com/77096463/108236366-2c719980-718a-11eb-9d50-6f63318fac64.png)
