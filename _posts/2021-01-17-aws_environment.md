@@ -48,6 +48,22 @@ Free Tier로 이용할 계획이므로 기본 플랜 (무료)을 선택한다. �
 
 ## 2. AWS IAM 계정 생성 및 MFA 설정
 
+### IAM 개념
+
+- AWS 리소스에 대한 액세스를 제어할 수 있는 AWS 서비스
+- AWS 리소스 사용 권한 부여와 제어
+- 보안상의 이유로 운영 환경에서 root 계정 (처음 회원가입한 계정) 사용 금지
+- 1인 1계정 생성하여 장애 발생 시 책임 소재를 명확히 함
+- IAM 생성할 때만 root 계정 사용 (생성한 계정에 AdministratorAccess 권한 부여)
+
+### MFA 개념
+
+- Mulfi-Factor Authentication : 사용자 이름과 암호 +OTP 인증 추가하여 로그인하는 서비스
+- 보안상 이유로 운영환경에서 IAM 개별 계정에 MFA 설정할 것을 권고 
+
+
+
+
 ### IAM 계정 생성
 
 1. 서비스 : 'IAM' 검색 후 사용자 -> 사용자 추가 탭으로 이동한다.
@@ -87,11 +103,54 @@ Free Tier로 이용할 계획이므로 기본 플랜 (무료)을 선택한다. �
 
 ## 3. VPC 구축
 
-### NAT 인스턴스
+### VPC 개념
 
-> VPC 생성하면서 자동으로 생성된다.
-> Private subnet이 인터넷과 통신하기 위한 아웃바운드 인스턴스
-> Private subnet에서 요청하는 아웃바운드 트래픽을 받아서 Internet Gateway와 연결한다. 
+- 가상 네트워크 환경으로 논리적으로 격리된 공간을 프로비저닝한다.
+- 논리적인 독립 네트워크를 구성하는 리소스
+- 하나의 계정에서 생성하는 리소스들만의 격리된 네트워크 환경 구성 가능
+- CIDR 범위는 사설 ip 대역으로 설정 (사설망 대역 : 10.0.0./8, 172.16.0.0/12, 192.168.0.0/16)
+	- CIDR 블록 : IP 범위를 지정하는 방식 (VPC 내의 자원들은 VPC의 CIDR 범위 안에서 ip를 할당받는다)
+	- route table의 기본 규칙이 VPC CIDR 블록에서 찾기 때문에 사설망이 아닌 CIDR를 사용하면 인터넷과 연결되는 라우트 규칙을 정의하더라도 통신 불가
+	
+	  
+### VPC 구성 요소
+
+- VPC
+- subnet
+- route table
+- internet gateway
+
+### Subnet 개념
+
+- VPC를 CIDR 블록을 가지는 단위로 나누어 더 많은 네트워크 망을 만들 수 있음
+- 실제 리소스가 생성되는 물리적인 공간
+- VPC CIDR 블록 범위 안에서 지정 가능
+- 인터넷과 연결되어 있으면 public subnet, 그렇지 않다면 private subnet
+
+### Internet Gateway 개념
+
+- VPC는 격리된 네트워크 환경이기 때문에 VPC에서 생성된 리소스들은 인터넷에 연결되어 있지 않음
+- VPC와 인터넷을 연결해주는 관문
+- VPC 생성 시 자동 생성됨
+
+### Route Table 인스턴스 개념
+
+- 데이터를 요청하면 -> 라우터가 라우터 테이블에서 정의한 범위 내에서 목적지를 찾아준다.
+
+### NAT Gateway 개념
+
+- private subnet이 인터넷과 통신하기 위한 아웃바운드 인스턴스
+- private subnet은 외부에서 요청하는 인바운드는 차단하더라도 아웃바운드 트래픽을 허용할 필요 있음
+- private subnet에서 외부로 요청하는 아웃바운드 트래픽을 받아 internet gateway와 연결
+
+### Bastion Host 개념
+
+- 내부와 외부 네트워크 사이에서 게이트 역할을 하는 host
+- 외부에서 접근이 가능하도록 Public IP 부여
+
+![aws_network](https://user-images.githubusercontent.com/77096463/109381939-a63f1b00-7920-11eb-926d-4d57c351d0ed.png)
+
+### NAT 인스턴스
 
 1. [서울 region]  	EC2 서비스 -> [네트워크 및 보안] 의 키 페어 메뉴 선택  -> 키 페어 생성
    - 이름 : mission
