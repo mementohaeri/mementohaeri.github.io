@@ -33,6 +33,21 @@ tags :
 
 # 2. Slack 설정
 
+### Slack 개념
+- 협업 메신저 툴
+- 채널 기반 메시징 플랫폼
+- 최초 회원가입 없이 workspace 별 계정 사용
+- workspace 내 project 채널 생성 -> webhook을 이용해 cloudwatch 알람 수신
+	- 채널 : workspace 내의 채팅방 / 채널별로 계정 view 권한 제한 가능
+	- **webhook** : 서버에서 이벤트가 발생하였을 때 클라이언트를 호출하는 메커니즘 제공
+			: 외부 시스템에서 slack으로 post message 발송
+			: 외부 시스템에서 이벤트 발생 -> 클라이언트에서 제공하는 webhook Trigger -> action 수행 (예. 슬랙 채널에 메시지 전송) -> webhook 내부에서 슬랙의 webhook endpoint로 post 요청
+
+![image-20210302215437264](2021-02-15-aws_cloudwatch_slack.assets/image-20210302215437264.png)
+
+<br>
+
+
 ### 로그인 & 워크스페이스 생성
 
 1. Slack 홈페이지 접속 -> 로그인 -> 워크 스페이스 생성 -> 채널 생성 (project)
@@ -60,6 +75,17 @@ tags :
 
 # 3. SNS 토픽 생성
 
+### SNS 개념
+- 메시지 브로커
+- 구독 중인 클라이언트에 메시지 전달을 조정 및 관리
+- Publisher: 게시자, 이벤트 생상
+- Subscriber: 구독자, 이벤트 구독
+- SNS 토픽 생성
+
+![image-20210302215603392](2021-02-15-aws_cloudwatch_slack.assets/image-20210302215603392.png)
+
+<br>
+
 1. SNS -> 주제 -> 주제 생성 
 
 - 주제 이름 : mission-sns로 설정한 후, 주제 생성하기 버튼 클릭
@@ -72,11 +98,21 @@ tags :
 
 # 4. Lambda 함수 생성
 
+### Lambda 개념
+- 서버리스 컴퓨팅 서비스
+- 애플리케이션을 실행하기 위한 별도의 서버 셋업 없이 곧바로 코드를 실행해주는 서비스
+- 고정 비용 없이 사용 시간에 대해서만 비용 청구
+- 블루프린트를 이용해 람다함수 생성
+
+<br>
+
+
 1. lambda -> 함수 생성
 2. 블루프린트 사용 -> slack을 검색하여 Cloudwatch-alaram-to-slack-python 을 선택한다.
 
 ![image](https://user-images.githubusercontent.com/77096463/107952743-7ff2b480-6fdd-11eb-9ecc-85a588ca63e9.png)
 <br/>
+
 3. 기본 정보 
 
 - 함수 이름 : mission-lambda
@@ -100,7 +136,14 @@ tags :
 
 # 5. KMS 키 설정
 
+### KMS 개념
+- 데이터를 암호화하는데 사용되는 암호화 키인 고객 마스터 키 관리
+- Lambda함수 slack으로 메시지 전송할 때 web hook 암호화
+- KMS 키 생성 -> 키 별칭 생성 -> 키 암호화
+<br>
+
 ### KMS 키 생성
+
 1. KMS 키 생성
 2. KMS -> 고객 관리형 키 -> 키 생성 확인
 
@@ -217,6 +260,13 @@ $ aws kms encrypt --key-id alias/mission-kms-key --plaintext "[web_hook_url]" --
 <br/>
 
 # 8. CloudWatch 알람 생성
+
+### CloudWatch 개념
+- AWS 리소스 모니터링 서비스
+- 알림 기능 -> 자원 사용량 임계치 초과했을 때 알람 발생
+- 로그 수집 기능 -> 자원에서 발생하는 로그 수집, 로그 분석 및 시각화
+- 대시보드 기능 -> Metric (지표)를 생성하여 대시보드 생성 가능
+<br>
 
 ### CloudWatch CPU 임계치 50%인 알람 생성
 
