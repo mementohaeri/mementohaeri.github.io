@@ -12,10 +12,30 @@ tags :
 ---
 
 1. ElasticSearch 구축
+
 2. Fluentd 구축
+
 3. Kibana 구축
-<br/>
-<br/>
+
+  <br/>
+### EFK Stack  구축을 통한 로그 수집
+- 컨테이너 환경에서의 로그 수집을 위해 EFK (ElasticSearch + Fluentd + Kibana) Stack을 구축
+- 로그 저장소인 ElasticSearch, 로그 수집기인 Fluentd, 로그 시각화 툴인 Kibana를 EKS 환경에서 구축
+- 쿠버네티스는 파드가 정상상태가 아니라면 새로 생성 -> **로그 저장소**는 죽은 파드에 있는 컨테이너가 남긴 로그를 수집
+
+### EFK 개념
+- ElasticSearch : 로그를 저장하기 위한 대용량 저장소
+- Fluentd : 컨테이너의 스트림 로그를 수집하는 로그 수집기. 모든 노드마다 동일하게 배포되어야 함 -> Daemonset
+- Kibana : ElasticSearch와 연동하여 로그 시각화 -> 로그 시각화를 통한 문제 해결 및 예방 가능
+
+![image](https://user-images.githubusercontent.com/77096463/109522240-68452100-7af1-11eb-8695-e757a15986ef.png)
+
+### Daemonset 개념
+- 쿠버네티스 컨트롤러 (deployment, replicaset) 중 하나 
+	- 컨트롤러 : 쿠버네티스 기본 오브젝트를 생성하고 관리하는 역할
+- Daemonset은 파드가 각각의 노드에 하나씩만 배포되게 하는 파드 관리 컨트롤러 
+
+<br>
 
 # 0. EKS 구성 및 Nginx 실행
 
@@ -111,10 +131,10 @@ metadata:
 spec:
   ports:
   - name: elasticsearch-rest
-    nodePort: 30920
-    port: 9200
+    nodePort: 30920	//(2)Node의 port
+    port: 9200	//(3)Service의 port
     protocol: TCP
-    targetPort: 9200
+    targetPort: 9200	//(4)Pod의 port
   - name: elasticsearch-nodecom
     nodePort: 30930
     port: 9300
@@ -125,6 +145,14 @@ spec:
   type: NodePort
 EOF
 ```
+![image](https://user-images.githubusercontent.com/77096463/109523763-0c7b9780-7af3-11eb-8932-57ac83ab12f9.png)
+
+1) LB의 보안 그룹 9200 포트 오픈 -> 인터넷을 통해 9200번 포트로 접근
+2) 9200번 포트로 들어온 트래픽을 Instance (workernode)의 30920번 포트로 전달
+3) workernode로 전달된 트래픽은 9200번 포트를 통해 서비스로 전달 -> yaml파일에 정의된 대로 9200번 포트를 통해 서비스는 클러스터 안에서 내부적으로 노출됨
+4) 9200번 포트로 보내진 요청은 서비스에 의해 선택된 Pod의 9200번 포트로 전달됨  (targetPort)
+
+
 <br/>
 
 elasticSearch.yaml파일로 NodePortType에 따라 elasticSearch를 배포한다.
@@ -293,7 +321,7 @@ kibana -> [discover] -> 검색필터 설정 -> kubernetes.labels.run is [nginx �
 
 # 3. Kibana 구축
 
-> kibana는 오픈 소스 기반의 분석 및 시각화 플랫폼이다. Elastic stack을 기반으로 구축된 오픈 소스 프론트엔드 애플리케이션으로 ElasticSearch에서 색인된 데이터를 검색하고 시각화하는 기능을 제공한다.
+> kibana는 **오픈 소스 기반의 분석 및 시각화 플랫폼**이다. Elastic stack을 기반으로 구축된 오픈 소스 프론트엔드 애플리케이션으로 ElasticSearch에서 색인된 데이터를 검색하고 시각화하는 기능을 제공한다.
 
 kibana.yaml 파일을 작성하여 kibana를 배포할 수 있다. 먼저 kibana.yaml 파일을 작성한다.
 
